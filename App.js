@@ -14,7 +14,7 @@ export default class App extends Component{
       {label: 'Universal Time', value: 'Universal Time Coordinated'},
       {label: 'Current Time', value: 'Current User Time'},
       {label: 'Japan', value: 'Japan Standard Time'},
-      {label: 'Los Angelos', value: 'Pacific Time'},
+      {label: 'Los Angeles', value: 'Pacific Time'},
       {label: 'London', value: 'British Summer Time'},
       {label: 'New York', value: 'Eastern Time'}, 
       {label: 'Moscow, Russia', value: 'Moscow Standard Time'},
@@ -38,7 +38,7 @@ export default class App extends Component{
       case 'Japan':
         this.setState({offset: (offset+9)})
         break;
-      case 'Los Angelos':
+      case 'Los Angeles':
         this.setState({offset: (offset-7)})
         break;
       case 'London':
