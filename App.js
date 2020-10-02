@@ -10,6 +10,7 @@ var offset = time.getTimezoneOffset()/60
 export default class App extends Component{
 
   state={
+
     timezone: [
       {label: 'Universal Time', value: 'Universal Time Coordinated'},
       {label: 'Current Time', value: 'Current User Time'},
@@ -81,7 +82,6 @@ export default class App extends Component{
     if(hours > 24){
       hours -= 24
     }
-    
     if(hours >= 5 && hours < 7)
     {
       this.setState({image: require('./assets/sunrise.jpg')})
@@ -102,11 +102,13 @@ export default class App extends Component{
     {
       this.setState({image: require('./assets/night.jpg')})
     }
-
     if(hours > 12){
       hours -= 12
       meridiem = ' PM'
-    }else{
+    }else if(hours == 12){
+      meridiem = ' PM'
+    }
+    else{
       meridiem = ' AM'
     }
 
@@ -114,6 +116,13 @@ export default class App extends Component{
       minutes = '0'+minutes
     }
     return [hours, minutes, meridiem]
+  }
+
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state,callback)=>{
+      return;
+    };
   }
 
   componentDidMount(){
@@ -137,9 +146,9 @@ export default class App extends Component{
           resizeMode='cover'
           source={this.state.image}
         >
-          <Text style={styles.times}>{ this.state.selectedValue } - { this.state.time }</Text>
-          <Text style={{color: '#000', fontSize: 20}}>──────────────────</Text>
-          <Text style={styles.button} onPress={() => this.myref.openPicker() }>Select a Time Zone</Text>
+          <Text style={{fontSize: 30,} }>{ this.state.selectedValue } - { this.state.time }</Text>
+          <Text style={{fontSize: 20}}>──────────────────</Text>
+          <Text style={{fontSize: 22,}} onPress={() => this.myref.openPicker() }>Select a Time Zone</Text>
           
           
           <PickerBox
@@ -164,18 +173,7 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-  },
-  button: {
-    fontSize: 22,
-    textAlign: 'center',
-    margin: 10,
-  },
-  times: {
-    fontSize: 30,
-    textAlign: 'center',
     color: '#000',
-    marginBottom: 5,
   },
   image: {
     width: '100%',
@@ -183,5 +181,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
   },
 });
