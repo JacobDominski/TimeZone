@@ -82,6 +82,27 @@ export default class App extends Component{
     if(hours > 24){
       hours -= 24
     }
+
+    this.changeImage(hours)
+    
+    if(hours > 12){
+      hours -= 12
+      meridiem = ' PM'
+    }else if(hours == 12){
+      meridiem = ' PM'
+    }
+    else{
+      meridiem = ' AM'
+    }
+
+    if(date.getMinutes() < 10){
+      minutes = '0'+minutes
+    }
+    return [hours, minutes, meridiem]
+  }
+
+  changeImage(hours){
+    
     if(hours >= 5 && hours < 7)
     {
       this.setState({image: require('./assets/sunrise.jpg')})
@@ -102,20 +123,6 @@ export default class App extends Component{
     {
       this.setState({image: require('./assets/night.jpg')})
     }
-    if(hours > 12){
-      hours -= 12
-      meridiem = ' PM'
-    }else if(hours == 12){
-      meridiem = ' PM'
-    }
-    else{
-      meridiem = ' AM'
-    }
-
-    if(date.getMinutes() < 10){
-      minutes = '0'+minutes
-    }
-    return [hours, minutes, meridiem]
   }
 
   componentWillUnmount() {
